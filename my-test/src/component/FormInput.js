@@ -16,6 +16,7 @@ const FormInput = (props) => {
         user_mobliephone:'',
         user_passportNo:'',
         user_salary:'', 
+        editing:false
     }); 
     console.log(user.user_firstname) 
     const dispatch = useDispatch({}); 
@@ -45,6 +46,7 @@ const FormInput = (props) => {
             user_mobliephone:'',
             user_passportNo:'',
             user_salary:'',
+            editing:false
         }    
         setUser({ ...user, ...clear_users }); 
     }

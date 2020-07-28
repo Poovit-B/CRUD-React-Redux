@@ -10,6 +10,12 @@ const List = (props) =>{
             id:e
         })  
     }
+    const handleUpdate = (e) => { 
+        dispatch({    
+            type:'EDIT_DATA', 
+            id:e
+        })  
+    }
     return(
         <div>
             <table class="table">
@@ -33,10 +39,10 @@ const List = (props) =>{
                     <td>{users.user_phoneType+users.user_mobliephone}</td>  
                     <td>{users.user_nationality}</td>
                     <td>  
-                        <a href=""> Edit</a> /
+                        <a href="#" onClick={() => handleUpdate(users.id)}> Edit</a> /
                         <a href="#" onClick={() => handleDelete(users.id)}> Delete </a>
-                      
-                    </td>
+                        {((users.editing) == false) ? "False" : "True"}
+                    </td> 
                     </tr>
                 ))  
                 : <tr>

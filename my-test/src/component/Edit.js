@@ -51,7 +51,8 @@ const FormInput = (props) => {
    
 
     return(
-       <div className="mt-5">
+       <div className="mt-5">  
+           <h2>Edit Form</h2>
             <form onSubmit={handleSubmit}> 
                 <div className="form-row">
                     <div className="form-group col-md-2">
