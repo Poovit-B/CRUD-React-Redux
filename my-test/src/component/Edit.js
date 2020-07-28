@@ -190,7 +190,7 @@ const FormInput = (props) => {
                     </div>    
                     <div className="form-group col-md-1">
                         <div className="form-group row">
-                        <input type="submit" className="btn btn-primary" value="Submit" />
+                        <input type="submit" className="btn btn-primary" value="Update" />
                         </div>
                     </div>             
                 </div>
