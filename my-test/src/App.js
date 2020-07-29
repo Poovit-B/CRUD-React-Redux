@@ -7,31 +7,41 @@ import Footer from './component/Footer';
 import FormInput from './component/FormInput';
 import Edit from './component/Edit'
 import List from './component/List';
-import {connect} from 'react-redux'
+import { useDispatch , useSelector} from 'react-redux'; 
+
 
 function App(props) {
+  const { user } = useSelector((state) => state); 
+  let roots = user.map(function(users) {
+    if(users.editing == true){
+        return users 
+    }
+  })
+  console.log(roots)
   return ( 
     <div> 
         <Header />
-       <div className="container">
+       <div className="container"> 
+          {
+          user.filter(users => users.editing==true).map(filteredName => (
+              // console.log(filteredName)    
+              <FormInput key={filteredName.id} userdata={filteredName} />  
+          ))    
+          }
           <FormInput />
           <List />
+    
 
-          {props.user.map((users) => (
-          
-          (users.editing == true) 
-          ? <Edit />      
-          : ''       
-          )) }
        </div>
-        
+       <Footer />
     </div>
+    
   );
 }
-const mapStateToProps = (state) =>{
-  return{
-      user: state
-  }
-} 
+// const mapStateToProps = (state) =>{
+//   return{
+//       user: state
+//   }
+// } 
 
-export default connect(mapStateToProps)(App);
+export default App;
