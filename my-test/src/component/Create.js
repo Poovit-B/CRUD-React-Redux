@@ -1,34 +1,55 @@
 import React, { useState } from 'react'
 import {connect} from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 
 const Create = (props) => {  
+    const { userdata } = useSelector((state) => state);
     const [errorCheck, setErrorCheck] = useState({});
     const [error, setError] = useState({});
+
+    const [citizenID,setCitizenID]  = useState({
+        citizen_one:"",
+        citizen_two:"",
+        citizen_three:"",
+        citizen_four:"",
+        citizen_five:"", 
+    })
+    const onChangeCItizenID = (e) => {   
+        setCitizenID({ ...citizenID, [e.target.name]: e.target.value });
+    };
+ 
     const [user, setUser] = useState({  
         id:new Date, 
         user_title:"Mr",
         user_firstname: '',
         user_lastname: '',
         user_birthday:'',
-        user_nationality:'',
+        user_nationality:'', 
         user_citizenID:'',
         user_gender:"Male",
         user_phoneType:"+66",
         user_mobliephone:'',
         user_passportNo:'',
         user_salary:'', 
-        editing:false
-    }); 
+        editing:false,
+        isChecked: false,      
+    });   
     
     const dispatch = useDispatch({}); 
-    const onChange = (e) => {
-        if (e.target.name == "user_firstname" || e.target.name == "user_lastname") {
-            let value = e.target.value.replace(/[^A-Za-zก-๙\d]/gi, "");
-            setUser({ ...user, [e.target.name]: value });  
+
+
+    const onChange = (e) => {   
+        if (e.target.name == "citizen_one" || e.target.name == "citizen_two" || e.target.name == "citizen_three" || e.target.name == "citizen_four" || e.target.name == "citizen_five") {
+            
+            setCitizenID({ ...citizenID, [e.target.name]: e.target.value }); 
+            
+            var Personal_ID = citizenID.citizen_one+ "-"+citizenID.citizen_two+ "-"+citizenID.citizen_three+ "-"+citizenID.citizen_four+ "-"+citizenID.citizen_five;
+            console.log(Personal_ID)   
+            setUser({ ...user, user_citizenID: Personal_ID });  
         }
         setUser({ ...user, [e.target.name]: e.target.value });
      };
+
 
      const validation = (e) => {
         let formIsValid = true;
@@ -69,11 +90,12 @@ const Create = (props) => {
         setError({ ...error, ...errors });
         return formIsValid;
       };
+     
     
  
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const val = validation();
+        e.preventDefault();   
+        const val = validation(); 
         if (val) { 
             dispatch({    
                 type:'ADD_DATA', 
@@ -92,7 +114,8 @@ const Create = (props) => {
                 user_mobliephone:'',
                 user_passportNo:'',
                 user_salary:'', 
-                editing:false 
+                editing:false,
+                isChecked: false, 
             }
             setUser({...user, ...clear_user})
             alert('Submit Success')
@@ -108,12 +131,12 @@ const Create = (props) => {
                         <div className="form-group row">
                             <label  className="col-sm-5 col-form-label">Title *</label>
                             <div className="col-sm-7">
-                                <select id="inputState" name="user_title" className="form-control" onChange={onChange}>
-                                    <option selected>Mr</option>
-                                    <option>Mrs</option>
-                                    <option>Miss</option>
-                                    <option>Ms</option>
-                                    <option>Dr</option>
+                                <select id="inputState" name="user_title"  className="form-control" onChange={onChange}>
+                                    <option selected={user.user_title=="Mr"}>Mr</option>
+                                    <option selected={user.user_title=="Mrs"}>Mrs</option>
+                                    <option selected={user.user_title=="Miss"}>Miss</option>
+                                    <option selected={user.user_title=="Ms"}>Ms</option>
+                                    <option selected={user.user_title=="Dr"}>Dr</option> 
                                 </select>
                             </div>
                         </div>
@@ -122,7 +145,7 @@ const Create = (props) => {
                         <div className="form-group row">
                             <label  className="col-sm-3 col-form-label">Firstname *</label>
                             <div className="col-sm-9">    
-                            <input type="text" className={`form-control ${errorCheck.errorChecks_firstname ? 'is-invalid' : ''}`} name="user_firstname" value={user.user_firstname} onChange={onChange} />
+                            <input type="text" className={`form-control ${errorCheck.errorChecks_firstname ? 'is-invalid' : ''}`} name="user_firstname" value={user.user_firstname} onChange={onChange}  />
                             <div class="invalid-feedback">
                             {error.error_firstname}
                             </div>
@@ -159,10 +182,10 @@ const Create = (props) => {
                             <label  className="col-sm-2 col-form-label">Nationality</label>
                             <div className="col-sm-10">
                                 <select id="inputState" className="form-control" name="user_nationality" onChange={onChange}>
-                                    <option selected>Choose your Nationality</option>
-                                    <option>Thai</option>
-                                    <option>American</option>
-                                    <option>Laos</option>
+                                    <option selected={user.user_nationality==null}>Choose your Nationality</option>
+                                    <option selected={user.user_nationality=="Thai"}>Thai</option>
+                                    <option selected={user.user_nationality=="American"}>American</option>
+                                    <option selected={user.user_nationality=="Laos"}>Laos</option> 
                                 </select>
                             </div>
                         </div>
@@ -170,12 +193,45 @@ const Create = (props) => {
                 </div>
 
                 <div className="form-row">
-                    <div className="form-group col-md-8">
+                    {/* <div className="form-group col-md-8">
                         <div className="form-group row">
                             <label  className="col-sm-2 col-form-label">Citizen ID </label>
                             <div className="col-sm-6">
                             <input type="text" className="form-control" name="user_citizenID" value={user.user_citizenID} onChange={onChange} />
                             </div> 
+                        </div>
+                    </div>                */}
+                    <div className="form-group col-md-12">
+                        <div className="form-group row">
+                            <label  className="col-sm-2 col-form-label">CitizenID </label>
+                            <div className="col-sm-9">
+                            <div className="form-group row"  style={{marginBottom: "-10px"}}>
+                                <div className="col-sm-1"> 
+                                <input type="text" className={`form-control`} name="citizen_one" maxlength="1" onChange={onChange}  />
+                                </div> 
+                                <p className="col-form-label">-</p> 
+                                <div className="col-sm-2"> 
+                                    <input type="text" className={`form-control`} name="citizen_two"  maxlength="4" onChange={onChange}   />
+
+                                </div>
+                                <p className="col-form-label">-</p>
+                                <div className="col-sm-3">
+                                    <input type="text" className={`form-control`} name="citizen_three" maxlength="5" onChange={onChange} />
+
+                                </div>
+                                <p className="col-form-label">-</p>
+                                <div className="col-sm-2">
+                                    <input type="text" className={`form-control`} name="citizen_four" maxlength="2" onChange={onChange} />
+ 
+                                </div> 
+                                <p className="col-form-label">-</p> 
+                                <div className="col-sm-1">
+                                    <input type="text" className={`form-control`} name="citizen_five" maxlength="1" onChange={onChange} />
+
+                                </div>
+                         
+                            </div>                        
+                            </div>
                         </div>
                     </div>               
                 </div>
@@ -206,9 +262,9 @@ const Create = (props) => {
                             <div className="form-group row"  style={{marginBottom: "-10px"}}>
                                 <div className="col-sm-4">
                                     <select className="form-control" name="user_phoneType" onChange={onChange}>
-                                        <option selected>+66</option>
-                                        <option>+77</option>
-                                        <option>+88</option>
+                                        <option  selected={user.user_phoneType=="+66"} >+66</option>
+                                        <option selected={user.user_phoneType=="+77"}>+77</option>
+                                        <option selected={user.user_phoneType=="+88"}>+88</option>
                                     </select>
                                 </div>
                                 <p className="col-form-label">-</p>

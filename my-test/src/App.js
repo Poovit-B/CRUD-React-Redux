@@ -12,18 +12,15 @@ import { useDispatch , useSelector} from 'react-redux';
 
 function App(props) {
   const { user } = useSelector((state) => state); 
-  let roots = user.map(function(users) {
-    if(users.editing == true){
-        return users 
-    }
-  })
-  console.log(roots)
+  console.log(user)
   return ( 
     <div> 
         <Header />
        <div className="container"> 
+
           {
-          user.filter(users => users.editing==true).map(filteredName => (
+          user != null
+          && user.filter(users => users.editing==true).map(filteredName => (
               // console.log(filteredName)    
               <FormInput key={filteredName.id} userdata={filteredName} />  
           ))    

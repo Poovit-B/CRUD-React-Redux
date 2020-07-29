@@ -13,22 +13,17 @@ export default (state = initialState, action) => {
             };
         //return [...state, user: state.concat([action.payload])
         case 'DELETE_DATA': 
+            console.log(action.payload)
             return {
                 ...state,
                 user: state.user.filter((users)=>users.id !== action.payload)  
             }
-        case 'MULTI_DELETE_DATA': 
-            action.payload.filter((ra) => {
-                return { 
+        case 'MULTI_DELETE_DATA':
+            var filteredKeywords = state.user.filter((users) => !action.payload.includes(users.id));
+            return { 
                     ...state,
-                    user : state.user.filter((users)=>users.id !== ra)
-                } 
-            });
-            console.log(state.user)
-            // return {
-            //     ...state,
-            //     user: state.user.filter((users)=>users.id !== action.payload[0])  
-            // }
+                    user : filteredKeywords
+                }
         case 'EDIT_DATA': 
             return {
                 ...state,
