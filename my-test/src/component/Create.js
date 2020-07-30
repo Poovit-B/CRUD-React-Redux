@@ -39,14 +39,20 @@ const Create = (props) => {
 
 
     const onChange = (e) => {   
-        if (e.target.name == "citizen_one" || e.target.name == "citizen_two" || e.target.name == "citizen_three" || e.target.name == "citizen_four" || e.target.name == "citizen_five") {
+        // if (e.target.name == "citizen_one" || e.target.name == "citizen_two" || e.target.name == "citizen_three" || e.target.name == "citizen_four" || e.target.name == "citizen_five") {
             
-            setCitizenID({ ...citizenID, [e.target.name]: e.target.value }); 
+        //     setCitizenID({ ...citizenID, [e.target.name]: e.target.value }); 
             
-            var Personal_ID = citizenID.citizen_one+ "-"+citizenID.citizen_two+ "-"+citizenID.citizen_three+ "-"+citizenID.citizen_four+ "-"+citizenID.citizen_five;
-            console.log(Personal_ID)   
-            setUser({ ...user, user_citizenID: Personal_ID });  
-        }
+        //     var Personal_ID = citizenID.citizen_one+ "-"+citizenID.citizen_two+ "-"+citizenID.citizen_three+ "-"+citizenID.citizen_four+ "-"+citizenID.citizen_five;
+        //     console.log(Personal_ID)   
+        //     //setUser({ ...user, user_citizenID: Personal_ID });  
+        // } 
+        // setUser({ user_citizenID: "Personal_ID" });  
+        // if (e.target.name == "user_citizenID"){ 
+        //     if(e.target.value.length == 1){
+
+        //     }
+        // }
         setUser({ ...user, [e.target.name]: e.target.value });
      };
 
@@ -201,9 +207,9 @@ const Create = (props) => {
                             </div> 
                         </div>
                     </div>                */}
-                    <div className="form-group col-md-12">
+                    {/* <div className="form-group col-md-12">
                         <div className="form-group row">
-                            <label  className="col-sm-2 col-form-label">CitizenID </label>
+                            <label  className="col-sm-1 col-form-label">CitizenID </label>
                             <div className="col-sm-9">
                             <div className="form-group row"  style={{marginBottom: "-10px"}}>
                                 <div className="col-sm-1"> 
@@ -230,6 +236,20 @@ const Create = (props) => {
 
                                 </div>
                          
+                            </div>                        
+                            </div>
+                        </div>
+                    </div>               
+                </div> */}
+
+                <div className="form-group col-md-12">
+                        <div className="form-group row">
+                            <label  className="col-sm-1 col-form-label">CitizenID </label>
+                            <div className="col-sm-9"> 
+                            <div className="form-group row"  style={{marginBottom: "-10px"}}>
+                                <div className="col-sm-5">   
+                                <input type="number" className={`form-control`} name="user_citizenID"  value={user.user_citizenID} onChange={onChange}  />
+                                </div> 
                             </div>                        
                             </div>
                         </div>
